@@ -1,0 +1,202 @@
+\documentclass[openany]{book}
+
+\usepackage{CJK}
+% \usepackage{url}
+
+\usepackage{indentfirst}
+\usepackage{comment}
+\usepackage[pdftex]{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{slashbox}
+\usepackage{fancyhdr}
+
+\usepackage{layout}
+
+% 中文章节号相关包
+\usepackage{titlesec,titletoc}
+\usepackage{CJKnumb}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 设置页面格式
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 页边距 上3.5cm 下4.0cm 左、右2.8cm
+\usepackage[lmargin=2.8cm,rmargin=2.8cm,tmargin=3.5cm,bmargin=4cm]{geometry}
+
+% 设置文档内链接引用
+\usepackage{hyperref}
+\hypersetup{
+    backref,
+    CJKbookmarks, % This is a must
+    colorlinks,
+    linkcolor = blue,
+    citecolor = blue,
+    urlcolor  = blue,
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 字体、字号相关设置
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 定义字体
+\newcommand{\song}{\CJKfamily{song}}
+\newcommand{\kai}{\CJKfamily{gkai}}
+\newcommand{\hei}{\CJKfamily{hei}}
+
+% 定义字号
+\newcommand{\setfontsize}[2]{\setstretch{#2}\fontsize{#1}{#1}\selectfont}
+\newcommand{\fontone}{26pt}        % 一号
+\newcommand{\fonttwo}{22pt}        % 二号
+\newcommand{\fontsmalltwo}{18pt}   % 小二
+\newcommand{\fontthree}{16pt}      % 三号
+\newcommand{\fontsmallthree}{15pt} % 小三
+\newcommand{\fontfour}{14pt}       % 四号
+\newcommand{\fonthalfsmallfour}{13pt} % 半小四
+\newcommand{\fontsmallfour}{12pt}  % 小四
+\newcommand{\fontbigfive}{11pt}    % 大五
+\newcommand{\fontfive}{10.5pt}     % 五号
+
+\captionsetup{tablewithin=none}
+\captionsetup{figurewithin=none}
+
+\begin{document}
+\begin{CJK*}{UTF8}{song}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 章节号、章节标题相关设置
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 设置中文章节号
+\renewcommand{\contentsname}{目~~录}
+\renewcommand{\bibname}{参~考~文~献}
+\renewcommand{\listfigurename}{图~例~列~表}
+\renewcommand{\listtablename}{表~格~列~表}
+\newcommand{\chaptertitlefont}{\hei\bf\setfontsize{\fontthree}{1}}
+\newcommand{\sectiontitlefont}{\hei\bf\setfontsize{\fontfour}{1}}
+\newcommand{\subsecttitlefont}{\hei\bf\setfontsize{\fontsmallfour}{1}}
+\titleformat{\chapter}{\centering}{\chaptertitlefont 第\,\CJKnumber{\thechapter}\,章}{1em}{\chaptertitlefont}{}
+\titleformat{\section}{}{\sectiontitlefont \thesection}{1em}{\sectiontitlefont}{}
+\titleformat{\subsection}{}{\subsecttitlefont \thesubsection}{1em}{\subsecttitlefont}{}
+\titleformat{\subsubsection}{}{}{1em}{\subsecttitlefont}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 图、表相关设置
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 图中标注全部用英文
+% 图、表引用中有中文，在正文部分重定义
+
+% command: myfig
+% parameter:
+%    1 - floating pattern (optional)
+%    2 - figure path
+%    3 - scale factor
+%    4 - label
+%    5 - short caption name
+%    6 - Chinese caption
+%    7 - English caption
+\newcommand{\myfig}[7][h!]{ %
+\begin{figure}[#1]
+    \centering
+    \includegraphics[scale=#3]{#2}
+    \caption[#5]{\kai \label{figure:#4}#6}{Fig.~\thefigure:~#7}
+\end{figure}
+}
+
+% environment: mytab
+% parameter:
+%    1 - floating pattern (optional)
+%    2 - label
+%    3 - short caption name
+%    4 - Chinese caption
+%    5 - English caption
+%    6 - column definition
+\newenvironment{mytab}[6][h!]{ %
+\begin{table}[#1]
+    \centering
+    \caption[#3]{\kai \label{table:#2}#4}{\vspace{-8pt} Tab.~\thetable:~#5\\}
+    \vspace{4pt}
+    \begin{tabular}{#6}
+}{ %
+    \end{tabular}
+\end{table}}
+
+\newcommand{\figref}[1]{图\ref{figure:#1}}
+\newcommand{\tabref}[1]{表\ref{table:#1}}
+
+% 图、表标题中文化
+\renewcommand{\tablename}{\kai 表}
+\renewcommand{\figurename}{\kai 图}
+
+% 章节引用相关
+\newcommand{\seclabel}[1]{\label{sec:#1}}
+\newcommand{\secref}[1]{\ref{sec:#1}~节}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 正文设置
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 四号、1.25倍间距
+\setfontsize{\fontfour}{1.25}
+% 开头空两格
+\setlength{\parindent}{2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% header and footer
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrule}{ %
+    {\rule{\headwidth}{1.2pt}} %
+    {\rule[0.8\baselineskip]{\headwidth}{0.5pt}}\vskip-0.8\baselineskip
+}
+\renewcommand{\chaptermark}[1]{\markboth{~第\CJKnumber{\thechapter}章~~~#1~}{}}
+    \fancypagestyle{plain}{
+    \lhead{上海交通大学硕士学位论文}
+    \rhead{\leftmark}
+    \cfoot{第~~\thepage~~页}
+}
+\lhead{上海交通大学硕士专业学位论文}
+\rhead{\leftmark}
+\cfoot{第~~\thepage~~页}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% main body
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{多云存储平台与多设备间\\数据备份与同步的研究}
+\author{邱爽}
+\date{}
+\maketitle
+
+% \layout
+
+% 导言部分
+\frontmatter
+\pagenumbering{Roman}
+\input{abstract}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\mainmatter
+\input{introduction}
+\input{backup_rosycloud}
+\input{security_clouddepot}
+\input{dedup}
+\input{implementation}
+\input{evaluation}
+\input{conclusion}
+
+\newpage
+
+\bibliographystyle{abbrv}
+\bibliography{backup}
+
+\clearpage
+\end{CJK*}
+\end{document}
